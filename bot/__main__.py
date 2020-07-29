@@ -22,16 +22,16 @@ def stats(update, context):
     total = get_readable_file_size(total)
     used = get_readable_file_size(used)
     free = get_readable_file_size(free)
-    stats = f'Bot Uptime: {currentTime}\n' \
-            f'Total disk space: {total}\n' \
-            f'Used: {used}\n' \
-            f'Free: {free}'
+    stats = f'Total disk space: 400.11GB \n'
+  
+           
+
     sendMessage(stats, context.bot, update)
 
 
 @run_async
 def start(update, context):
-    sendMessage("This is a bot which can mirror all your links to Google drive!\n"
+    sendMessage("Welcome to Private group\n"
                 "Type /help to get a list of available commands", context.bot, update)
 
 
