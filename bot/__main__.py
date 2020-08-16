@@ -17,16 +17,20 @@ from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clon
 
 @run_async
 def stats(update, context):
+    def stats(update, context):
     currentTime = get_readable_time((time.time() - botStartTime))
     total, used, free = shutil.disk_usage('.')
     total = get_readable_file_size(total)
     used = get_readable_file_size(used)
     free = get_readable_file_size(free)
-    stats = f'Total disk space: 400.11GB \n'
-  
+    stats = f'Bot Uptime: {currentTime}\n' \
+            f'Total disk space: {total}\n' \
+            f'Used: {used}\n' \
+            f'Free: {free}'
+    sendMessage(stats, context.bot, update)
            
 
-    sendMessage(stats, context.bot, update)
+
 
 
 @run_async
@@ -35,7 +39,17 @@ def start(update, context):
                 "Type /help to get a list of available commands", context.bot, update)
 
 
-@run_async
+@run_asyncdef stats(update, context):
+    currentTime = get_readable_time((time.time() - botStartTime))
+    total, used, free = shutil.disk_usage('.')
+    total = get_readable_file_size(total)
+    used = get_readable_file_size(used)
+    free = get_readable_file_size(free)
+    stats = f'Bot Uptime: {currentTime}\n' \
+            f'Total disk space: {total}\n' \
+            f'Used: {used}\n' \
+            f'Free: {free}'
+    sendMessage(stats, context.bot, update)
 def restart(update, context):
     restart_message = sendMessage("Restarting, Please wait!", context.bot, update)
     # Save restart message object in order to reply to it after restarting
@@ -105,7 +119,7 @@ def main():
     help_handler = CommandHandler(BotCommands.HelpCommand,
                                   bot_help, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
     stats_handler = CommandHandler(BotCommands.StatsCommand,
-                                   stats, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
+                                   stats, filters=CustomFilters.owner_filter | filters=CustomFilters.owner_filter)
     log_handler = CommandHandler(BotCommands.LogCommand, log, filters=CustomFilters.owner_filter)
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(ping_handler)
